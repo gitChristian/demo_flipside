@@ -36,6 +36,8 @@ const useStyles = makeStyles( theme => ({
 
 const ExampleJSPage = () => {
   const [metricData, setMetricData] = useState({});
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(50);
   const classes = useStyles();
 
   useEffect(() => {
@@ -84,6 +86,15 @@ const ExampleJSPage = () => {
       });
   }
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <div>
       <CssBaseline/>
@@ -103,6 +114,7 @@ const ExampleJSPage = () => {
         <TableBody>
           { Object.keys(metricData)
           .sort( (a,b) => metricData[b].fcas - metricData[a].fcas )
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map( (row) => (
             <TableRow key={row}>
               <TableCell>{metricData[row].name}</TableCell>
@@ -125,7 +137,15 @@ const ExampleJSPage = () => {
           ))}
         </TableBody>
       </Table>
-      <TablePagination component="div" count={50}/>
+      <TablePagination
+          rowsPerPageOptions={[50, 500]}
+          component="div"
+          count={Object.keys(metricData).length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
     </TableContainer>
     </div>
   );
