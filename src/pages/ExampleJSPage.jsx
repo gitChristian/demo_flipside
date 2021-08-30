@@ -7,14 +7,21 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import TablePagination from '@material-ui/core/TablePagination';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import { LineChart, Line } from 'recharts';
 
-
 const useStyles = makeStyles( theme => ({
+  container: {
+    width: '97%',
+    margin: 'auto',
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    padding: theme.spacing(2)
+  },
   table: {
-    minWidth: 650,
+    minWidth: 650, 
     "& td": {
       border: `1px solid ${theme.palette.grey[600]}`
     },
@@ -22,10 +29,6 @@ const useStyles = makeStyles( theme => ({
       border: `1px solid ${theme.palette.grey[600]}`
     }     
   },
-  container: {
-    width: '98%',
-    margin: 'auto'
-  }, 
   tableHead : {
     backgroundColor: theme.palette.grey[400]
   }
@@ -122,6 +125,7 @@ const ExampleJSPage = () => {
           ))}
         </TableBody>
       </Table>
+      <TablePagination component="div" count={50}/>
     </TableContainer>
     </div>
   );
